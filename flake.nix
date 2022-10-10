@@ -9,7 +9,7 @@
     hls.url = "github:haskell/haskell-language-server?ref=master";
     shs.url =
       "github:luc-tielen/souffle-haskell?rev=c46d0677e4bc830df89ec1de2396c562eb9d86d3";
-    llvm-cg.url = "github:smunix/llvm-codegen?fix.x86_64-linux";
+    llvm-cg.url = "github:smunix/llvm-codegen?fix.x86_64-darwin";
     alga.url =
       "github:snowleopard/alga?rev=75de41a4323ab9e58ca49dbd78b77f307b189795";
     alga.flake = false;
@@ -23,7 +23,7 @@
       np = shs.inputs.np;
     in with np.lib;
     with fu.lib;
-    eachSystem [ "x86_64-linux" ] (system:
+    eachSystem [ "x86_64-darwin" ] (system:
       let
         ghcVersion = "902";
         llvmVersion = 14;
