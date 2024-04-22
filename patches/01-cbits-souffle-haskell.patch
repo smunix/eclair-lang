@@ -1,0 +1,49 @@
+diff --git a/cbits/souffle/CompiledSouffle.h b/cbits/souffle/CompiledSouffle.h
+index 01008a7..0d6ebc5 100644
+--- a/cbits/souffle/CompiledSouffle.h
++++ b/cbits/souffle/CompiledSouffle.h
+@@ -250,7 +250,13 @@ public:
+     context createContext() {
+         return context();
+     }
+-    class iterator : public std::iterator<std::forward_iterator_tag, Tuple<RamDomain, Arity>> {
++    class iterator {
++        using iterator_category = std::forward_iterator_tag;
++        using value_type = Tuple<RamDomain, Arity>;
++        using difference_type = ptrdiff_t;
++        using pointer = value_type*;
++        using reference = value_type&;
++
+         typename std::vector<Tuple<RamDomain, Arity>>::const_iterator it;
+ 
+     public:
+@@ -331,7 +337,13 @@ struct t_eqrel {
+     using t_tuple = Tuple<RamDomain, 2>;
+     using t_ind = EquivalenceRelation<t_tuple>;
+     t_ind ind;
+-    class iterator_0 : public std::iterator<std::forward_iterator_tag, t_tuple> {
++    class iterator_0 {
++        using iterator_category = std::forward_iterator_tag;
++        using value_type = t_tuple;
++        using difference_type = ptrdiff_t;
++        using pointer = value_type*;
++        using reference = value_type&;
++
+         using nested_iterator = typename t_ind::iterator;
+         nested_iterator nested;
+         t_tuple value;
+@@ -358,7 +370,13 @@ struct t_eqrel {
+             return *this;
+         }
+     };
+-    class iterator_1 : public std::iterator<std::forward_iterator_tag, t_tuple> {
++    class iterator_1 {
++        using iterator_category = std::forward_iterator_tag;
++        using value_type = t_tuple;
++        using difference_type = ptrdiff_t;
++        using pointer = value_type*;
++        using reference = value_type&;
++
+         using nested_iterator = typename t_ind::iterator;
+         nested_iterator nested;
+         t_tuple value;

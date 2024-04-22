@@ -1,0 +1,44 @@
+diff --git a/lib/Language/Souffle/Interpreted.hs b/lib/Language/Souffle/Interpreted.hs
+index 75a9db8..47f7d68 100644
+--- a/lib/Language/Souffle/Interpreted.hs
++++ b/lib/Language/Souffle/Interpreted.hs
+@@ -39,7 +39,7 @@ import Control.Monad.State.Strict
+ import Data.IORef
+ import Data.Foldable (traverse_)
+ import qualified Data.List as List hiding (init)
+-import Data.Semigroup (Last(..))
++import Data.Semigroup (First(..))
+ import Data.Maybe (fromMaybe)
+ import Data.Proxy
+ import qualified Data.Array as A
+@@ -100,9 +100,9 @@ data Config
+ defaultConfig :: MonadIO m => m Config
+ defaultConfig = liftIO $ do
+   dlDir <- lookupEnv "DATALOG_DIR"
+-  envSouffleBin <- fmap Last <$> lookupEnv "SOUFFLE_BIN"
+-  locatedBin <- fmap Last <$> locateSouffle
+-  let souffleBin = getLast <$> locatedBin <> envSouffleBin
++  envSouffleBin <- fmap First <$> lookupEnv "SOUFFLE_BIN"
++  locatedBin <- fmap First <$> locateSouffle
++  let souffleBin = getFirst <$> locatedBin <> envSouffleBin
+   pure $ Config (fromMaybe "." dlDir) souffleBin Nothing Nothing
+ {-# INLINABLE defaultConfig #-}
+ 
+@@ -364,16 +364,7 @@ datalogProgramFile prog datalogDir = do
+ {-# INLINABLE datalogProgramFile #-}
+ 
+ locateSouffle :: IO (Maybe FilePath)
+-locateSouffle = do
+-  let locateCmd = (shell "which souffle") { std_out = CreatePipe }
+-  (_, Just hout, _, locateCmdHandle) <- createProcess locateCmd
+-  waitForProcess locateCmdHandle >>= \case
+-    ExitFailure _ -> pure Nothing
+-    ExitSuccess -> do
+-      contents <- hGetContents hout
+-      case words contents of
+-        [souffleBin] -> pure $ Just souffleBin
+-        _ -> pure Nothing
++locateSouffle = _locateSouffle_
+ {-# INLINABLE locateSouffle #-}
+ 
+ readCSVFile :: FilePath -> IO [[String]]

@@ -6,14 +6,5 @@ cradle:
     - path: "src/eclair/Main.hs"
       component: "eclair-lang:exe:eclair"
 
-    - path: "src/eclair/Paths_eclair_lang.hs"
-      component: "eclair-lang:exe:eclair"
-
-    - path: "src/lsp"
-      component: "eclair-lang:exe:eclair-lsp-server"
-
     - path: "tests/eclair"
       component: "eclair-lang:test:eclair-test"
-
-    - path: "tests/lsp/Main.hs"
-      component: "eclair-lang:test:eclair-lsp-test"
